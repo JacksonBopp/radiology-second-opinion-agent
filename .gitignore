@@ -8,3 +8,8 @@ data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+
+# Local MLflow tracking store/artifacts
+mlruns.db
+mlruns/
+mlartifacts/

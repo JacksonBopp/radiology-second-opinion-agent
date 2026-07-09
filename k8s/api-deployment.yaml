@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiology-api
+  labels:
+    app: radiology-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: radiology-api
+  template:
+    metadata:
+      labels:
+        app: radiology-api
+    spec:
+      containers:
+        - name: api
+          image: radiology-second-opinion-agent-api:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: CELERY_BROKER_URL
+              value: redis://redis:6379/0
+            - name: MLFLOW_TRACKING_URI
+              value: http://mlflow:5000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radiology-api
+spec:
+  selector:
+    app: radiology-api
+  ports:
+    - port: 80
+      targetPort: 8000
+  type: ClusterIP

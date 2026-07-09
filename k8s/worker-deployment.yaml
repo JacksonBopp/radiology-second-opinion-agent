@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiology-worker
+  labels:
+    app: radiology-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: radiology-worker
+  template:
+    metadata:
+      labels:
+        app: radiology-worker
+    spec:
+      containers:
+        - name: worker
+          image: radiology-second-opinion-agent-api:latest
+          command: ["celery", "-A", "src.worker.tasks.celery_app", "worker", "--loglevel=info"]
+          env:
+            - name: CELERY_BROKER_URL
+              value: redis://redis:6379/0
+            - name: MLFLOW_TRACKING_URI
+              value: http://mlflow:5000

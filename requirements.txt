@@ -2,3 +2,14 @@ numpy
 opencv-python-headless
 pydicom
 pytest
+
+# MLOps / serving
+mlflow
+fastapi
+uvicorn[standard]
+python-multipart
+httpx
+celery
+redis
+evidently
+pandas
