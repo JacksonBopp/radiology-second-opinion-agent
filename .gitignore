@@ -13,3 +13,7 @@ data/processed/*
 mlruns.db
 mlruns/
 mlartifacts/
+
+# Local SQLite stores (audit trail, radiologist feedback)
+audit_log.db
+feedback.db

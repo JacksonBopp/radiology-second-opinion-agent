@@ -11,10 +11,21 @@ def test_health():
     assert resp.json() == {"status": "ok"}
 
 
-def test_upload_scan_returns_metadata_and_pixel_stats(ct_dicom_path):
+def test_upload_scan_requires_auth(ct_dicom_path):
     with open(ct_dicom_path, "rb") as f:
         resp = client.post(
             "/scans", files={"file": ("CT_small.dcm", f, "application/dicom")}
+        )
+
+    assert resp.status_code == 401
+
+
+def test_upload_scan_returns_metadata_and_pixel_stats(ct_dicom_path, auth_headers):
+    with open(ct_dicom_path, "rb") as f:
+        resp = client.post(
+            "/scans",
+            files={"file": ("CT_small.dcm", f, "application/dicom")},
+            headers=auth_headers,
         )
 
     assert resp.status_code == 200
@@ -25,13 +36,17 @@ def test_upload_scan_returns_metadata_and_pixel_stats(ct_dicom_path):
     assert body["findings"] == []
 
 
-def test_upload_scan_rejects_empty_file():
-    resp = client.post("/scans", files={"file": ("empty.dcm", b"", "application/dicom")})
+def test_upload_scan_rejects_empty_file(auth_headers):
+    resp = client.post(
+        "/scans", files={"file": ("empty.dcm", b"", "application/dicom")}, headers=auth_headers
+    )
     assert resp.status_code == 400
 
 
-def test_upload_scan_rejects_invalid_dicom():
+def test_upload_scan_rejects_invalid_dicom(auth_headers):
     resp = client.post(
-        "/scans", files={"file": ("bad.dcm", b"not a dicom file", "application/dicom")}
+        "/scans",
+        files={"file": ("bad.dcm", b"not a dicom file", "application/dicom")},
+        headers=auth_headers,
     )
     assert resp.status_code == 422

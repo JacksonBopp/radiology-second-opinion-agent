@@ -23,6 +23,13 @@ services:
     environment:
       CELERY_BROKER_URL: redis://redis:6379/0
       MLFLOW_TRACKING_URI: http://mlflow:5000
+      # Override with real "name:key,name2:key2" pairs in production;
+      # falls back to a dev-only key if unset.
+      API_KEYS: ${API_KEYS:-}
+      AUDIT_DB_PATH: /app/data/audit_log.db
+      FEEDBACK_DB_PATH: /app/data/feedback.db
+    volumes:
+      - api_data:/app/data
     depends_on:
       - redis
       - mlflow
@@ -39,3 +46,4 @@ services:
 
 volumes:
   mlflow_data:
+  api_data:
