@@ -13,3 +13,9 @@ celery
 redis
 evidently
 pandas
+
+# Agent framework
+langgraph
+langchain-core
+langchain-community
+chromadb
