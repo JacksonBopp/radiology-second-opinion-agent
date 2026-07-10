@@ -9,7 +9,7 @@
 | Jackson Bopp | Data & MLOps Engineer: data pipeline, model serving, infrastructure |
 | Bryan Nguyen | GenAI & NLP Engineer: report generation, clinical language layer |
 | Nicholas Toptchi | ML Vision Engineer: computer vision pipeline |
-| Amrit Selva Ganesh | Agentic Systems Engineer & Full Stack/Integration Engineer: orchestration/reasoning layer, UI/API integration (supported by Jackson on the full-stack side) |
+| Amrit Ganesh | Agentic Systems Engineer & Full Stack/Integration Engineer: orchestration/reasoning layer, UI/API integration (supported by Jackson on the full-stack side) |
 
 See [IDEA.md](IDEA.md) for the detailed breakdown of responsibilities, architecture, and tech stack for each role.
 
