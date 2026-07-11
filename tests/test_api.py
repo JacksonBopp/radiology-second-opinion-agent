@@ -30,10 +30,12 @@ def test_upload_scan_returns_metadata_and_pixel_stats(ct_dicom_path, auth_header
 
     assert resp.status_code == 200
     body = resp.json()
-    assert body["status"] == "preprocessed"
+    assert body["status"] == "analyzed"
     assert body["metadata"]["modality"] is not None
     assert body["pixel_stats"]["processed_shape"] == [224, 224]
-    assert body["findings"] == []
+    assert isinstance(body["findings"], list)
+    assert body["vision"]["model_name"] == "deterministic-vision-baseline"
+    assert body["vision"]["explainability"]["heatmap_shape"] == [224, 224]
 
 
 def test_upload_scan_rejects_empty_file(auth_headers):

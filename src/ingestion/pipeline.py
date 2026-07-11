@@ -4,6 +4,7 @@ from pathlib import Path
 from .dicom_loader import load_dicom
 from .metadata import extract_metadata
 from .preprocess import normalize_pixels, resize_image, to_uint8
+from src.vision.pipeline import analyze_image
 
 
 def process_scan_bytes(filename: str, content: bytes) -> dict:
@@ -11,8 +12,8 @@ def process_scan_bytes(filename: str, content: bytes) -> dict:
     a JSON-safe result. Shared by the FastAPI endpoint and the async
     worker task so both entry points stay in sync.
 
-    `findings` is left empty here; it gets populated once the CV
-    model is wired into this pipeline.
+    The vision layer uses a deterministic baseline so local tests and demos do
+    not require downloading large model weights.
     """
     suffix = Path(filename).suffix or ".dcm"
     with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
@@ -25,6 +26,7 @@ def process_scan_bytes(filename: str, content: bytes) -> dict:
         normalized = normalize_pixels(scan.pixel_array)
         resized = resize_image(normalized, target_size=(224, 224))
         image_uint8 = to_uint8(resized)
+        vision = analyze_image(image_uint8)
 
         return {
             "filename": filename,
@@ -34,8 +36,9 @@ def process_scan_bytes(filename: str, content: bytes) -> dict:
                 "std": float(normalized.std()),
                 "processed_shape": list(image_uint8.shape),
             },
-            "findings": [],
-            "status": "preprocessed",
+            "findings": vision["findings"],
+            "vision": vision,
+            "status": "analyzed",
         }
     finally:
         tmp_path.unlink(missing_ok=True)

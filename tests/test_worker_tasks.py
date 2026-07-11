@@ -7,5 +7,6 @@ def test_process_scan_task_runs_synchronously(ct_dicom_path):
 
     result = process_scan.run("CT_small.dcm", content)
 
-    assert result["status"] == "preprocessed"
+    assert result["status"] == "analyzed"
     assert result["metadata"]["rows"] is not None
+    assert "vision" in result
