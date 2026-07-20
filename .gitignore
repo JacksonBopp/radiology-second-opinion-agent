@@ -6,6 +6,7 @@ __pycache__/
 # Scan data is large and often PHI-restricted; never commit it.
 data/raw/*
 data/processed/*
+data/chromadb/
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
@@ -19,5 +20,6 @@ audit_log.db
 feedback.db
 commands.txt
 
-# Local ChromaDB vector store (agentic retrieval layer)
-data/chromadb/
+# Frontend
+frontend/node_modules/
+frontend/dist/

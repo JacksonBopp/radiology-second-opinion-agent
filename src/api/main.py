@@ -5,8 +5,18 @@ from src.api.audit import AuditLogMiddleware
 from src.api.feedback import FeedbackIn, FeedbackOut, list_feedback, save_feedback
 from src.ingestion.pipeline import process_scan_bytes
 from src.api.routes.analysis import router as analysis_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Radiology Second-Opinion Agent API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins for local dev
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.add_middleware(AuditLogMiddleware)
 
 app.include_router(analysis_router)
