@@ -16,7 +16,7 @@ def test_run_analysis_graph_success():
     # Asserts
     assert result is not None
     assert result["scan_id"] == "scan-test-123"
-    assert result["status"] == "success"
+    assert result["status"] == "completed"
     
     # Check that each agent populated the state
     assert len(result.get("similar_cases", [])) > 0, "Retrieval agent failed"
@@ -30,7 +30,7 @@ def test_run_analysis_graph_success():
 def test_run_analysis_graph_empty_findings():
     """Test the graph with no findings to see how it handles a normal scan."""
     result = run_analysis_graph("scan-test-456", [], {})
-    
-    assert result["status"] == "success"
+
+    assert result["status"] == "completed"
     # Even with empty findings, it should run to completion and maybe provide baseline diagnoses or empty lists
     assert "differential_diagnoses" in result
