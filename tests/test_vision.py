@@ -1,6 +1,12 @@
 import numpy as np
 
-from src.vision import CHEST_XRAY_LABELS, VisionModelBaseline, evaluate_multilabel
+from src.vision import (
+    CHEST_XRAY_LABELS,
+    VisionModelBaseline,
+    compare_to_chexpert_benchmarks,
+    evaluate_multilabel,
+    summarize_chexpert_benchmark,
+)
 from src.vision.datasets import build_dataset_manifest
 from src.vision.explainability import gradcam_heatmap
 from src.vision.localization import segment_candidate_region
@@ -63,3 +69,20 @@ def test_build_dataset_manifest_collects_images(tmp_path):
     assert len(records) == 1
     assert records[0].dataset == "chexpert"
     assert records[0].split == "train"
+
+
+def test_compare_to_chexpert_benchmarks_reports_pass_fail_status():
+    metrics = {
+        "macro_auc": 0.81,
+        "macro_sensitivity": 0.72,
+        "macro_specificity": 0.69,
+    }
+
+    comparison = compare_to_chexpert_benchmarks(metrics)
+    summary = summarize_chexpert_benchmark(comparison)
+
+    assert comparison["suite"] == "CheXpert clinical benchmark"
+    assert comparison["passed"] is False
+    assert comparison["targets"]["macro_auc"]["passed"] is True
+    assert comparison["targets"]["macro_specificity"]["passed"] is False
+    assert "NEEDS IMPROVEMENT" in summary

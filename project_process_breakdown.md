@@ -176,7 +176,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 | 7.4 | Deploy to Kubernetes cluster (if available) | **Jackson** | 🔲 |
 | 7.5 | Activate MLflow model registry with Nick's trained models | **Jackson** | 🔲 |
 | 7.6 | Activate Evidently drift monitoring with real prediction data | **Jackson** | 🔲 |
-| 7.7 | Final model evaluation against CheXpert benchmarks | **Nick** | 🔲 |
+| 7.7 | Final model evaluation against CheXpert benchmarks | **Nick** | ✅ Done |
 | 7.8 | Final report quality evaluation (clinical accuracy, completeness) | **Bryan** | ✅ Done |
 | 7.9 | UI/UX polish, responsive design, error handling | **Amrit** | 🔲 |
 | 7.10 | Comprehensive documentation and README update | **All** | 🔲 |
@@ -208,7 +208,7 @@ graph TD
 | Member | Phases Active | Status | Total Tasks |
 |---|---|---|---|
 | **Jackson Bopp** | 1–3 ✅, 6 (support) ✅, 7 | **Scope 100% done** — Phase 7 tasks remain | 14 done, 4 remaining |
-| **Nicholas Toptchi** | 1–3 ✅, 7 | **~90% done** | 9 done, 1 remaining |
+| **Nicholas Toptchi** | 1–3 ✅, 7 | **Scope 100% done** | 10 done, 0 remaining |
 | **Bryan Nguyen** | 4–7 ✅ | **~100% of his scope done** | 8 done, 0 remaining |
 | **Amrit Ganesh** | 1, 4–7 (heaviest) | **~95% done** | 22 done, 2 remaining |
 
@@ -230,10 +230,7 @@ graph TD
 6. **7.5** — Activate MLflow model registry with Nick's models
 7. **7.6** — Activate Evidently drift monitoring
 
-### For Nick
-8. **7.7** — Final model evaluation against CheXpert benchmarks
-
 ### For All
-9. **7.2** — End-to-end integration test (upload → agent pipeline → report → feedback)
-10. **7.10** — Comprehensive documentation and README update
-11. **7.11** — Prepare presentation / demo
+8. **7.2** — End-to-end integration test (upload → agent pipeline → report → feedback)
+9. **7.10** — Comprehensive documentation and README update
+10. **7.11** — Prepare presentation / demo
