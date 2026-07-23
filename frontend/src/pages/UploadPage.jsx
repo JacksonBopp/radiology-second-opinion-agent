@@ -63,9 +63,7 @@ export default function UploadPage() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await api.post('/scans', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      const res = await api.post('/scans', formData);
       setUploadResult(res.data);
     } catch (err) {
       setError(err.response?.data?.detail || 'Upload failed');
