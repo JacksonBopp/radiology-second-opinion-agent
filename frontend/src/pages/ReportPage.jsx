@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import DicomViewer from '../components/DicomViewer';
 import GradCamControls, { generateMockGradcam } from '../components/GradCamOverlay';
 import FeedbackPanel from '../components/FeedbackPanel';
@@ -121,6 +121,13 @@ export default function ReportPage() {
   const [showGradcam, setShowGradcam] = useState(false);
   const [selectedFinding, setSelectedFinding] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Small timeout ensures the DOM has painted the initial 0% width before animating to target
+    const timer = setTimeout(() => setMounted(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Use passed data or fall back to mock
   const { analysisResult, imageData, scanId } = location.state || {};
@@ -256,7 +263,7 @@ export default function ReportPage() {
                       <div
                         className="differential-bar-fill"
                         style={{
-                          width: `${dx.probability * 100}%`,
+                          width: mounted ? `${dx.probability * 100}%` : '0%',
                           backgroundColor:
                             CONFIDENCE_COLORS[dx.confidence_level],
                         }}
