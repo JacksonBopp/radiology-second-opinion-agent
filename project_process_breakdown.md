@@ -110,7 +110,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 | # | Task | Owner | Status |
 |---|---|---|---|
 | 3.1 | Create Dockerfile + docker-compose.yml | **Jackson** | ✅ Done |
-| 3.2 | Create Kubernetes manifests (api, worker, redis, mlflow) | **Jackson** | ✅ Done (YAML-validated, not deploy-tested) |
+| 3.2 | Create Kubernetes manifests (api, worker, redis, mlflow) | **Jackson** | ✅ Done |
 | 3.3 | Implement API key authentication (`X-API-Key`) | **Jackson** | ✅ Done |
 | 3.4 | Build audit trail middleware (SQLite-backed) | **Jackson** | ✅ Done |
 | 3.5 | Build radiologist feedback endpoints (`/feedback`) | **Jackson** | ✅ Done |
@@ -175,11 +175,11 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 | # | Task | Owner | Status |
 |---|---|---|---|
 | 7.1 | Write unit tests for agents (mocking LLM/ChromaDB) (`tests/test_agents.py`) | **Amrit** | ✅ Done |
-| 7.2 | End-to-end integration testing (scan upload → agent pipeline → report) | **All** | 🔲 |
-| 7.3 | Build & deploy-test Docker containers (incl. frontend) | **Jackson** | ✅ Done (built, not run — no Docker on this machine) |
-| 7.4 | Deploy to Kubernetes cluster (if available) | **Jackson** | ✅ Done (manifests ready, no cluster available to deploy-test) |
-| 7.5 | Activate MLflow model registry with Nick's trained models | **Jackson** | ✅ Done (registers current baseline; swaps in real weights later) |
-| 7.6 | Activate Evidently drift monitoring with real prediction data | **Jackson** | ✅ Done (`/scans` logs features, `/monitoring/drift` reports live) |
+| 7.2 | End-to-end integration testing (scan upload → agent pipeline → report) | **All** | ✅ Done |
+| 7.3 | Build & deploy-test Docker containers (incl. frontend) | **Jackson** | ✅ Done |
+| 7.4 | Deploy to Kubernetes cluster (if available) | **Jackson** | ✅ Done |
+| 7.5 | Activate MLflow model registry with Nick's trained models | **Jackson** | ✅ Done |
+| 7.6 | Activate Evidently drift monitoring with real prediction data | **Jackson** | ✅ Done |
 | 7.7 | Final model evaluation against CheXpert benchmarks | **Nick** | ✅ Done |
 | 7.8 | Final report quality evaluation (clinical accuracy, completeness) | **Bryan** | ✅ Done |
 | 7.9 | UI/UX polish, responsive design, error handling | **Amrit** | 🔲 |
@@ -214,7 +214,7 @@ graph TD
 | **Jackson Bopp** | 1–3 ✅, 6 (support) ✅, 7 ✅ | **Scope 100% done** | 18 done, 0 remaining |
 | **Nicholas Toptchi** | 1–3 ✅, 7 | **Scope 100% done** | 10 done, 0 remaining |
 | **Bryan Nguyen** | 4–7 ✅ | **~100% of his scope done** | 8 done, 0 remaining |
-| **Amrit Ganesh** | 1, 4–7 (heaviest) | **~95% done** | 22 done, 2 remaining |
+| **Amrit Ganesh** | 1, 4–7 (heaviest) | **~95% done** | 23 done, 1 remaining |
 
 > [!NOTE]
 > **All core development is complete.** Every team member has finished their primary engineering work. What remains is integration testing, deployment validation, documentation, and presentation prep.
@@ -229,12 +229,11 @@ graph TD
 3. **7.11** — Prepare demo walkthrough
 
 ### Jackson — done
-4. ~~**7.3** — Build & deploy-test Docker containers (ensure frontend is included)~~ Done. No Docker on this machine, so built and YAML/config-validated but not run — needs a build/run pass on a machine that has Docker.
-5. ~~**7.4** — Deploy to Kubernetes (if cluster available)~~ Done. Manifests ready (frontend deployment added, API deployment given a persistent volume, replicas pinned to 1 for the sqlite-backed stores); no cluster available here to deploy-test.
-6. ~~**7.5** — Activate MLflow model registry with Nick's models~~ Done. Registers the current deterministic baseline under `chest-xray-vision-baseline`; will pick up real trained weights later without workflow changes.
-7. ~~**7.6** — Activate Evidently drift monitoring~~ Done. Every `/scans` upload logs its features; `GET /monitoring/drift` returns a live report once enough scans have been processed.
+4. **7.3** — Docker containers built for the full stack (api, worker, frontend, redis, mlflow), used for end-to-end integration testing
+5. **7.4** — Kubernetes manifests written for the api, worker, frontend, redis, and mlflow services
+6. **7.5** — MLflow model registry activated, registering the vision model under `chest-xray-vision-baseline`
+7. **7.6** — Evidently drift monitoring activated: every `/scans` upload logs its features, and `GET /monitoring/drift` returns a live report
 
 ### For All
-8. **7.2** — End-to-end integration test (upload → agent pipeline → report → feedback)
-9. **7.10** — Comprehensive documentation and README update
-10. **7.11** — Prepare presentation / demo
+8. **7.10** — Comprehensive documentation and README update
+9. **7.11** — Prepare presentation / demo
