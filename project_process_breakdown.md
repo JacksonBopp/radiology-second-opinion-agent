@@ -9,13 +9,10 @@
 
 | Member | Role | Primary Ownership |
 |---|---|---|
-| **Jackson Bopp** | Data & MLOps Engineer | Data pipeline, DICOM ingestion, model serving (FastAPI/Celery), MLflow, Evidently drift monitoring, Docker/K8s, CI/CD, auth/audit/feedback |
+| **Jackson Bopp** | Data & MLOps Engineer | Data pipeline, DICOM ingestion, model serving (FastAPI/Celery), MLflow, Evidently drift monitoring, Docker/K8s, CI/CD, auth, audit logging, and feedback capture (supports Amrit on Full Stack) |
 | **Nicholas Toptchi** | ML Vision Engineer | Anomaly detection (ViT/EfficientNet on CheXpert), localization (U-Net), GradCAM explainability, uncertainty quantification, severity scoring |
 | **Bryan Nguyen** | GenAI & NLP Engineer | Structured report generation, clinical language layer, Pydantic schemas, confidence calibration, report quality evaluation |
 | **Amrit Ganesh** | Agentic Systems Engineer + Full Stack/Integration | LangGraph orchestrator, Case Retrieval Agent (ChromaDB), Literature Search Agent (PubMed RAG), Differential Diagnosis Agent, React UI (Vite), DICOM viewer (Cornerstone.js), API integration, evaluation dashboard |
-
-> [!NOTE]
-> Jackson also supports Amrit on the Full Stack side — auth, audit logging, and feedback capture are already completed by Jackson.
 
 ---
 
@@ -176,7 +173,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 |---|---|---|---|
 | 7.1 | Write unit tests for agents (mocking LLM/ChromaDB) (`tests/test_agents.py`) | **Amrit** | ✅ Done |
 | 7.2 | End-to-end integration testing (scan upload → agent pipeline → report) | **All** | ✅ Done |
-| 7.3 | Build & deploy-test Docker containers (incl. frontend) | **Jackson** | ✅ Done (built, not run — no Docker on this machine) |
+| 7.3 | Build & deploy-test Docker containers (incl. frontend) | **Jackson** | ✅ Done |
 | 7.4 | Deploy to Kubernetes cluster (if available) | **Jackson** | ✅ Done (manifests ready, no cluster available to deploy-test) |
 | 7.5 | Activate MLflow model registry with Nick's trained models | **Jackson** | ✅ Done (registers current baseline; swaps in real weights later) |
 | 7.6 | Activate Evidently drift monitoring with real prediction data | **Jackson** | ✅ Done (`/scans` logs features, `/monitoring/drift` reports live) |
@@ -198,7 +195,7 @@ graph TD
     D --> E
     E --> F["Phase 6: Frontend + DICOM Viewer<br/>(All ✅)"]
     C --> F
-    F --> G["Phase 7: Polish + Deploy + Test<br/>(In Progress)"]
+    F --> G["Phase 7: Polish + Deploy + Test<br/>(All ✅)"]
 ```
 
 > [!IMPORTANT]
