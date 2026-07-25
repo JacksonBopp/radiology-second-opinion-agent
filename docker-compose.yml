@@ -28,11 +28,19 @@ services:
       API_KEYS: ${API_KEYS:-}
       AUDIT_DB_PATH: /app/data/audit_log.db
       FEEDBACK_DB_PATH: /app/data/feedback.db
+      SCAN_FEATURES_DB_PATH: /app/data/scan_features.db
     volumes:
       - api_data:/app/data
     depends_on:
       - redis
       - mlflow
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
 
   worker:
     build: .
