@@ -11,13 +11,19 @@ export default function UploadPage() {
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState(null);
   const [dragActive, setDragActive] = useState(false);
+  const [isParsing, setIsParsing] = useState(false);
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
   const parseFile = useCallback(async (selectedFile) => {
+    if (!selectedFile.name.toLowerCase().endsWith('.dcm') && !selectedFile.name.toLowerCase().endsWith('.dicom') && selectedFile.type !== 'application/dicom') {
+      setError('Invalid file type. Please upload a valid DICOM (.dcm) file.');
+      return;
+    }
     setFile(selectedFile);
     setError(null);
     setUploadResult(null);
+    setIsParsing(true);
     try {
       const buffer = await selectedFile.arrayBuffer();
       const bytes = new Uint8Array(buffer);
@@ -31,7 +37,10 @@ export default function UploadPage() {
       }
       setImageData({ width, height, pixelData });
     } catch (err) {
+      setError('Could not parse file for preview. The file might be corrupted.');
       console.warn('Could not parse file for preview:', err);
+    } finally {
+      setIsParsing(false);
     }
   }, []);
 
@@ -133,9 +142,18 @@ export default function UploadPage() {
               </div>
             ) : (
               <div className="drop-zone-empty">
-                <span className="drop-zone-icon">⬆</span>
-                <p>Drop DICOM file here</p>
-                <p className="text-muted text-sm">or click to browse</p>
+                {isParsing ? (
+                  <>
+                    <span className="spinner" style={{ width: '2.5rem', height: '2.5rem', marginBottom: '1rem', display: 'inline-block' }} />
+                    <p>Parsing DICOM...</p>
+                  </>
+                ) : (
+                  <>
+                    <span className="drop-zone-icon">⬆</span>
+                    <p>Drop DICOM file here</p>
+                    <p className="text-muted text-sm">or click to browse</p>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -145,7 +163,7 @@ export default function UploadPage() {
             <button
               className="btn btn--primary"
               onClick={handleUpload}
-              disabled={!file || uploading}
+              disabled={!file || uploading || analyzing || isParsing}
             >
               {uploading ? (
                 <span className="btn-loading">
@@ -160,7 +178,7 @@ export default function UploadPage() {
               <button
                 className="btn btn--accent"
                 onClick={handleAnalyze}
-                disabled={analyzing}
+                disabled={analyzing || uploading || isParsing}
               >
                 {analyzing ? (
                   <span className="btn-loading">

@@ -6,7 +6,7 @@ const navItems = [
   { path: '/dashboard', label: 'Dashboard', icon: '📊' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => { logout(); navigate('/login'); };
@@ -25,6 +25,7 @@ export default function Sidebar() {
           <NavLink
             key={item.path}
             to={item.path}
+            onClick={onClose}
             className={({ isActive }) =>
               `sidebar-link ${isActive ? 'sidebar-link--active' : ''}`
             }

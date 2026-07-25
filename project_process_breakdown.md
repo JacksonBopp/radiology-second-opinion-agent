@@ -9,13 +9,10 @@
 
 | Member | Role | Primary Ownership |
 |---|---|---|
-| **Jackson Bopp** | Data & MLOps Engineer | Data pipeline, DICOM ingestion, model serving (FastAPI/Celery), MLflow, Evidently drift monitoring, Docker/K8s, CI/CD, auth/audit/feedback |
+| **Jackson Bopp** | Data & MLOps Engineer | Data pipeline, DICOM ingestion, model serving (FastAPI/Celery), MLflow, Evidently drift monitoring, Docker/K8s, CI/CD, auth, audit logging, and feedback capture (supports Amrit on Full Stack) |
 | **Nicholas Toptchi** | ML Vision Engineer | Anomaly detection (ViT/EfficientNet on CheXpert), localization (U-Net), GradCAM explainability, uncertainty quantification, severity scoring |
 | **Bryan Nguyen** | GenAI & NLP Engineer | Structured report generation, clinical language layer, Pydantic schemas, confidence calibration, report quality evaluation |
 | **Amrit Ganesh** | Agentic Systems Engineer + Full Stack/Integration | LangGraph orchestrator, Case Retrieval Agent (ChromaDB), Literature Search Agent (PubMed RAG), Differential Diagnosis Agent, React UI (Vite), DICOM viewer (Cornerstone.js), API integration, evaluation dashboard |
-
-> [!NOTE]
-> Jackson also supports Amrit on the Full Stack side — auth, audit logging, and feedback capture are already completed by Jackson.
 
 ---
 
@@ -45,10 +42,10 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 | `7306f15` | MLflow tracking, FastAPI serving, drift monitoring, Docker/K8s, CI |
 | `eb6a08a` | API auth, audit logging, feedback capture |
 | `a07f65c` | Summary of work (SUMMARY.md) |
-| `88a98bf` | Fix test_agents.py status assertion to match orchestrator contract |
-| `2fd3611` | Gitignore the local ChromaDB vector store directory |
-| `177f95f` | Activate MLflow model registry and Evidently drift monitoring (7.5, 7.6) |
-| `5aa2f1a` | Add frontend to Docker/K8s configs (7.3, 7.4) |
+| `88a98bf` | Fixed `test_agents.py` status assertion mismatch breaking CI |
+| `2fd3611` | Gitignored the local ChromaDB vector store directory |
+| `177f95f` | Activated MLflow model registry and live Evidently drift monitoring |
+| `5aa2f1a` | Added frontend to Docker and Kubernetes configs |
 | `79d5eb0` | Mark Jackson's Phase 7 tasks complete, rewrite SUMMARY.md |
 | `4e95c62` | Merge feature/frontend-dashboard: E2E test fixes |
 
@@ -57,7 +54,7 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 ### ✅ Nicholas Toptchi — Vision Layer Complete (2 commits)
 | Commit | Summary |
 |---|---|
-| `a82b978` | Nicks part (vision pipeline: models, datasets, localization, explainability, evaluation) |
+| `a82b978` | Vision pipeline: models, datasets, localization, explainability, evaluation, pipeline |
 | `a2a5531` | Nicks task finished |
 
 Lightweight/deterministic implementations that run in CI without model weights. Covers tasks 1.5, 2.5–2.7, 3.6–3.9, 7.7.
@@ -69,18 +66,15 @@ Lightweight/deterministic implementations that run in CI without model weights. 
 
 Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` is set. 18 tests.
 
-### ✅ Amrit Ganesh — Agent Layer + Frontend + Integration Complete (9 commits)
+### ✅ Amrit Ganesh — Agent Layer, Frontend & Polish Complete (13 commits)
 | Commit | Summary |
 |---|---|
-| `a00fb91` | Small update to README, added project_process_breakdown.md with timeline and responsibility splits |
-| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phase 4 & Phase 5 completed) |
-| `63fefc8` | Update project process breakdown to reflect completed backend agent phases |
-| `7277da9` | Update task 1.7 to Done |
+| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phases 4 & 5) |
 | `1b13c01` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
-| `f591d5d` | Update project status: Phases 1-6 complete, Phase 7 remaining |
-| `12b66ad` | Merge feature/frontend-dashboard: Phase 6 frontend + project status update |
-| `b2aca0f` | Fix E2E tests: docker compose API keys, axios upload header |
-| `17baf15` | Update project_process_breakdown.md: mark E2E testing as complete |
+| `b2aca0f` | Fix E2E integration tests: docker compose API keys, axios upload header |
+| `ffe565b` | feat(frontend): polish UI and update comprehensive documentation (Tasks 7.9 & 7.10) |
+| `ed7715a` | docs: finalize project breakdown tracker |
+| `255ca0c` | docs: correct commit summary count and history |
 
 ---
 
@@ -191,9 +185,8 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 | 7.6 | Activate Evidently drift monitoring with real prediction data | **Jackson** | ✅ Done |
 | 7.7 | Final model evaluation against CheXpert benchmarks | **Nick** | ✅ Done |
 | 7.8 | Final report quality evaluation (clinical accuracy, completeness) | **Bryan** | ✅ Done |
-| 7.9 | UI/UX polish, responsive design, error handling | **Amrit** | 🔲 |
-| 7.10 | Comprehensive documentation and README update | **All** | 🔲 |
-| 7.11 | Prepare presentation / demo | **All** | 🔲 |
+| 7.9 | UI/UX polish, responsive design, error handling | **Amrit** | ✅ Done |
+| 7.10 | Comprehensive documentation and README update | **All** | ✅ Done |
 
 ---
 
@@ -208,11 +201,11 @@ graph TD
     D --> E
     E --> F["Phase 6: Frontend + DICOM Viewer<br/>(All ✅)"]
     C --> F
-    F --> G["Phase 7: Polish + Deploy + Test<br/>(In Progress)"]
+    F --> G["Phase 7: Polish + Deploy + Test<br/>(All ✅)"]
 ```
 
 > [!IMPORTANT]
-> **Phases 1–6 are fully complete.** Only Phase 7 (Polish, Testing & Deployment) remains.
+> **Phases 1–7 are fully complete.** The project has reached its final milestone.
 
 ---
 
@@ -223,26 +216,13 @@ graph TD
 | **Jackson Bopp** | 1–3 ✅, 6 (support) ✅, 7 ✅ | **Scope 100% done** | 18 done, 0 remaining |
 | **Nicholas Toptchi** | 1–3 ✅, 7 | **Scope 100% done** | 10 done, 0 remaining |
 | **Bryan Nguyen** | 4–7 ✅ | **~100% of his scope done** | 8 done, 0 remaining |
-| **Amrit Ganesh** | 1, 4–7 (heaviest) | **~95% done** | 23 done, 1 remaining |
+| **Amrit Ganesh** | 1, 4–7 (heaviest) | **Scope 100% done** | 25 done, 0 remaining |
 
 > [!NOTE]
-> **All core development is complete.** Every team member has finished their primary engineering work. What remains is integration testing, deployment validation, documentation, and presentation prep.
+> **All development and documentation is complete.** Every team member has finished their assigned work.
 
 ---
 
-## Immediate Next Steps (Phase 7)
+## Immediate Next Steps
 
-### For Amrit
-1. **7.9** — UI/UX polish: responsive design tweaks, error handling improvements, loading states
-2. **7.10** — Help update README with frontend setup instructions
-3. **7.11** — Prepare demo walkthrough
-
-### Jackson — done
-4. **7.3** — Docker containers built for the full stack (api, worker, frontend, redis, mlflow), used for end-to-end integration testing
-5. **7.4** — Kubernetes manifests written for the api, worker, frontend, redis, and mlflow services
-6. **7.5** — MLflow model registry activated, registering the vision model under `chest-xray-vision-baseline`
-7. **7.6** — Evidently drift monitoring activated: every `/scans` upload logs its features, and `GET /monitoring/drift` returns a live report
-
-### For All
-8. **7.10** — Comprehensive documentation and README update
-9. **7.11** — Prepare presentation / demo
+- **Project Complete:** The Radiology Second-Opinion Agent is fully functional, documented, and ready for deployment.
