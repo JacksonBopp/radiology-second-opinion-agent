@@ -34,7 +34,7 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 
 ## Current Status (as of July 25, 2026)
 
-### ✅ Jackson — Complete (9 commits)
+### ✅ Jackson — Complete (10 commits)
 | Commit | Summary |
 |---|---|
 | `4aac708` | Project setup: README, IDEA.md, team info |
@@ -46,13 +46,15 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 | `2fd3611` | Gitignored the local ChromaDB vector store directory |
 | `177f95f` | Activated MLflow model registry and live Evidently drift monitoring |
 | `5aa2f1a` | Added frontend to Docker and Kubernetes configs |
+| `79d5eb0` | Mark Jackson's Phase 7 tasks complete, rewrite SUMMARY.md |
 
 **62 tests passing**, CI green on GitHub Actions.
 
-### ✅ Nick — Vision Layer Complete (1 commit)
+### ✅ Nick — Vision Layer Complete (2 commits)
 | Commit | Summary |
 |---|---|
 | `a82b978` | Vision pipeline: models, datasets, localization, explainability, evaluation, pipeline |
+| `a2a5531` | Nicks task finished |
 
 Lightweight/deterministic implementations that run in CI without model weights. Covers tasks 1.5, 2.5–2.7, 3.6–3.9.
 
@@ -63,7 +65,7 @@ Lightweight/deterministic implementations that run in CI without model weights. 
 
 Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` is set. 18 tests.
 
-### ✅ Amrit — Agent Layer, Frontend & Polish Complete (12 commits)
+### ✅ Amrit — Agent Layer, Frontend & Polish Complete (13 commits)
 | Commit | Summary |
 |---|---|
 | `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phases 4 & 5) |
@@ -71,6 +73,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 | `b2aca0f` | Fix E2E integration tests: docker compose API keys, axios upload header |
 | `ffe565b` | feat(frontend): polish UI and update comprehensive documentation (Tasks 7.9 & 7.10) |
 | `ed7715a` | docs: finalize project breakdown tracker |
+| `255ca0c` | docs: correct commit summary count and history |
 
 ---
 
