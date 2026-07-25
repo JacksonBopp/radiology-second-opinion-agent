@@ -37,7 +37,7 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 
 ## Current Status (as of July 25, 2026)
 
-### ✅ Jackson — Complete (9 commits)
+### ✅ Jackson Bopp — Complete (11 commits)
 | Commit | Summary |
 |---|---|
 | `4aac708` | Project setup: README, IDEA.md, team info |
@@ -45,33 +45,42 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 | `7306f15` | MLflow tracking, FastAPI serving, drift monitoring, Docker/K8s, CI |
 | `eb6a08a` | API auth, audit logging, feedback capture |
 | `a07f65c` | Summary of work (SUMMARY.md) |
-| `88a98bf` | Fixed `test_agents.py` status assertion mismatch breaking CI |
-| `2fd3611` | Gitignored the local ChromaDB vector store directory |
-| `177f95f` | Activated MLflow model registry and live Evidently drift monitoring |
-| `5aa2f1a` | Added frontend to Docker and Kubernetes configs |
+| `88a98bf` | Fix test_agents.py status assertion to match orchestrator contract |
+| `2fd3611` | Gitignore the local ChromaDB vector store directory |
+| `177f95f` | Activate MLflow model registry and Evidently drift monitoring (7.5, 7.6) |
+| `5aa2f1a` | Add frontend to Docker/K8s configs (7.3, 7.4) |
+| `79d5eb0` | Mark Jackson's Phase 7 tasks complete, rewrite SUMMARY.md |
+| `4e95c62` | Merge feature/frontend-dashboard: E2E test fixes |
 
 **62 tests passing**, CI green on GitHub Actions.
 
-### ✅ Nick — Vision Layer Complete (1 commit)
+### ✅ Nicholas Toptchi — Vision Layer Complete (2 commits)
 | Commit | Summary |
 |---|---|
-| `a82b978` | Vision pipeline: models, datasets, localization, explainability, evaluation, pipeline |
+| `a82b978` | Nicks part (vision pipeline: models, datasets, localization, explainability, evaluation) |
+| `a2a5531` | Nicks task finished |
 
-Lightweight/deterministic implementations that run in CI without model weights. Covers tasks 1.5, 2.5–2.7, 3.6–3.9.
+Lightweight/deterministic implementations that run in CI without model weights. Covers tasks 1.5, 2.5–2.7, 3.6–3.9, 7.7.
 
-### ✅ Bryan — Report Layer Complete (1 commit)
+### ✅ Bryan Nguyen — Report Layer Complete (1 commit)
 | Commit | Summary |
 |---|---|
-| `cd6a1fb` | GenAI report layer: schemas, prompts, calibration, style, generator, evaluation (4.7, 4.8, 5.7–5.10, 6.9, 7.8) |
+| `cd6a1fb` | Add GenAI report generation layer: schemas, prompts, calibration, style, generator, evaluation (4.7, 4.8, 5.7, 5.8, 5.9, 5.10, 6.9, 7.8) |
 
 Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` is set. 18 tests.
 
-### ✅ Amrit — Agent Layer + Frontend Complete (3 commits)
+### ✅ Amrit Ganesh — Agent Layer + Frontend + Integration Complete (9 commits)
 | Commit | Summary |
 |---|---|
-| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phase 4 & 5) |
-| `28843ff` | Update project process breakdown |
-| `f5b3adf` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
+| `a00fb91` | Small update to README, added project_process_breakdown.md with timeline and responsibility splits |
+| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phase 4 & Phase 5 completed) |
+| `63fefc8` | Update project process breakdown to reflect completed backend agent phases |
+| `7277da9` | Update task 1.7 to Done |
+| `1b13c01` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
+| `f591d5d` | Update project status: Phases 1-6 complete, Phase 7 remaining |
+| `12b66ad` | Merge feature/frontend-dashboard: Phase 6 frontend + project status update |
+| `b2aca0f` | Fix E2E tests: docker compose API keys, axios upload header |
+| `17baf15` | Update project_process_breakdown.md: mark E2E testing as complete |
 
 ---
 
