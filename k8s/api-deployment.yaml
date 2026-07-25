@@ -5,7 +5,12 @@ metadata:
   labels:
     app: radiology-api
 spec:
-  replicas: 2
+  # Pinned to 1: the sqlite stores (audit/feedback/drift) are mounted
+  # from a single ReadWriteOnce PVC, which only one pod can attach at
+  # a time, and sqlite itself isn't safe for concurrent multi-pod
+  # writes anyway. Move these stores to a real database before
+  # scaling this back up.
+  replicas: 1
   selector:
     matchLabels:
       app: radiology-api
@@ -24,6 +29,21 @@ spec:
               value: redis://redis:6379/0
             - name: MLFLOW_TRACKING_URI
               value: http://mlflow:5000
+            - name: API_KEYS
+              valueFrom:
+                secretKeyRef:
+                  name: radiology-api-secrets
+                  key: api-keys
+                  optional: true
+            - name: AUDIT_DB_PATH
+              value: /app/data/audit_log.db
+            - name: FEEDBACK_DB_PATH
+              value: /app/data/feedback.db
+            - name: SCAN_FEATURES_DB_PATH
+              value: /app/data/scan_features.db
+          volumeMounts:
+            - name: api-data
+              mountPath: /app/data
           readinessProbe:
             httpGet:
               path: /health
@@ -36,6 +56,10 @@ spec:
               port: 8000
             initialDelaySeconds: 10
             periodSeconds: 20
+      volumes:
+        - name: api-data
+          persistentVolumeClaim:
+            claimName: radiology-api-data
 ---
 apiVersion: v1
 kind: Service
@@ -48,3 +72,14 @@ spec:
     - port: 80
       targetPort: 8000
   type: ClusterIP
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: radiology-api-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

@@ -1,52 +1,61 @@
-# Summary of Changes — Jackson Bopp (Data & MLOps Engineer)
+# Data & MLOps Report: Jackson Bopp
 
-Covers work on the `radiology-second-opinion-agent` repo across four commits, plus the Full Stack/Integration pieces done in support of Amrit. All code is tested (27 passing tests) and verified against GitHub Actions CI.
+This covers everything I've built on the radiology-second-opinion-agent repo so far, as Data & MLOps Engineer, plus the parts of the Full Stack/Integration role I picked up to help Amrit out. Repo is here: https://github.com/JacksonBopp/radiology-second-opinion-agent
 
-## 1. Project setup
+## Getting the project started
 
-- Created the GitHub repo, README (team, roles, project description, related work, datasets), and added all four teammates as collaborators.
+Set up the GitHub repo, wrote the initial README (team, roles, project description, related work, datasets), and added the rest of the team as collaborators.
 
-## 2. DICOM ingestion pipeline (`src/ingestion/`)
+## DICOM ingestion pipeline
 
-- `dicom_loader.py`: reads a DICOM file with pydicom and applies the modality LUT (e.g. converts stored CT values to Hounsfield units).
-- `preprocess.py`: windowing/clipping, min-max normalization, resize, uint8 conversion — the steps needed before pixels reach a CV model.
-- `metadata.py`: pulls non-identifying tags (modality, body part, dimensions, UIDs) and explicitly excludes PatientName/PatientID so PHI doesn't flow downstream.
-- `pipeline.py`: ties the above together into one `process_scan_bytes()` function shared by the API and the async worker.
-- Tests use pydicom's bundled sample DICOM files, so no real patient data is needed to run the suite.
+Everything lives in `src/ingestion/`. The loader reads a DICOM file with pydicom and applies the modality LUT, so pixel values come out as real-world units (Hounsfield units for CT, for example) instead of raw stored integers. The preprocessing step handles windowing, normalization, resizing, and converting to uint8, basically getting an image ready for a CV model. The metadata module pulls the useful tags like modality, body part, and dimensions, and deliberately leaves out PatientName and PatientID so no PHI flows further into the system. All of this gets tied together in `pipeline.py`, which both the API and the async worker call.
 
-## 3. MLOps / serving layer
+Tests use the sample DICOM files that ship with pydicom, so nobody needs real patient scans to run the suite.
 
-- `src/mlops/tracking.py`: MLflow experiment tracking helper (`tracked_run()` context manager). Defaults to a local sqlite backend; set `MLFLOW_TRACKING_URI` to point at a real server.
-- `src/api/main.py`: FastAPI app exposing `/health` and `POST /scans` (upload a scan, get back metadata + preprocessing stats).
-- `src/worker/tasks.py`: Celery task wrapping the same pipeline for async processing via Redis, matching the architecture in IDEA.md.
-- `src/monitoring/drift.py`: Evidently-based data drift reports over scan-level feature batches, for catching distribution shift once the system is in production.
+## MLOps and serving
 
-## 4. Containerization & CI/CD
+Built the MLflow tracking helper (`src/mlops/tracking.py`) so experiments can be logged with a simple `tracked_run()` context manager. It uses a local sqlite backend by default and picks up `MLFLOW_TRACKING_URI` if you want to point it at a real server instead.
 
-- `Dockerfile` + `docker-compose.yml`: wires together `api`, `worker`, `redis`, and `mlflow` services.
-- `k8s/`: Deployment/Service manifests for the same four services (not yet cluster-tested — Docker isn't installed on this machine, so configs are YAML-validated but not build-tested).
-- `.github/workflows/ci.yml`: runs the full test suite on every push/PR to `master`. Confirmed green on GitHub's runners.
+Set up the FastAPI app with a `/health` check and a `/scans` endpoint that takes an uploaded scan and runs it through the ingestion pipeline. Also wired up a Celery task that does the same processing asynchronously through Redis, matching what we sketched out in IDEA.md.
 
-## 5. Auth, audit logging, and feedback (helping Amrit — Full Stack/Integration role)
+## Containers and CI
 
-- `src/api/auth.py`: API key authentication (`X-API-Key` header), keys configured via `API_KEYS` env var as `name:key` pairs.
-- `src/api/audit.py`: SQLite-backed audit trail middleware — logs every request's method, path, status code, and authenticated actor. Flagged explicitly in the team's architecture doc as required for a medical system.
-- `src/api/feedback.py` + `/feedback` endpoints: lets a radiologist submit corrections against a scan's original model findings, stored and retrievable by `scan_id`. This is the "radiologist correction capture" piece from Amrit's role.
-- `/scans` and `/feedback` now require a valid API key; `/health` stays open for uptime checks.
+Wrote the Dockerfile and docker-compose setup connecting the api, worker, redis, and mlflow services, plus matching Kubernetes manifests. Set up GitHub Actions so the full test suite runs on every push and PR to master.
 
-## What's still open on this role
+## Auth, audit logging, and feedback
 
-- Docker/Kubernetes configs haven't been build/deploy-tested (no Docker on this machine).
-- The React web UI, DICOM viewer with GradCAM overlay, and evaluation dashboard are still unbuilt — those are Amrit's remaining Full Stack/Integration items and depend partly on Nick's CV model existing first.
-- MLflow tracking and the drift monitoring module are ready but have nothing to log yet until the ML Vision Engineer's model produces real predictions.
+This is the part I did to help Amrit, since he was covering two roles. Added API key authentication so requests need a valid key, a SQLite-backed audit log that records every request (method, path, status, who made it), and a feedback endpoint so a radiologist can submit corrections against a scan's findings. Both `/scans` and `/feedback` require auth now.
+
+## Keeping things working as the team's code landed
+
+Once Bryan's report generation layer, Nick's vision pipeline, and Amrit's agent orchestration all merged into master, I pulled everything in and checked it didn't break my side of things. It didn't, all 27 of my original tests kept passing. Found and fixed one real bug in the process: `tests/test_agents.py` was asserting the orchestrator returns `status: "success"`, but the orchestrator actually returns `"completed"` consistently everywhere else in its own code. Fixed the test to match, which got CI back to green. Also caught a stray `data/chromadb/` folder that the retrieval agent's tests create locally and made sure it's gitignored so nobody accidentally commits a binary vector database.
+
+## Latest round: registry, drift monitoring, and deployment configs
+
+The team gave me four more things to knock out:
+
+**MLflow model registry.** Nick's vision model right now is a deterministic baseline, not a trained neural net yet, since there's no CheXpert data mounted to train against. I registered it anyway under the name `chest-xray-vision-baseline` so the registry workflow is proven out and ready. When real trained weights exist, they slot into the same flow without any code changes downstream.
+
+**Drift monitoring, actually turned on.** Before this it was a module that worked in tests but wasn't hooked up to anything real. Now every scan that comes through `/scans` gets its features (pixel stats, dimensions, model confidence) logged to a small SQLite store, and there's a new `GET /monitoring/drift` endpoint that compares older scans against newer ones and returns a real drift report once enough data has come in.
+
+**Docker with the frontend included.** Wrote a Dockerfile for the frontend that builds it with Node and serves it through nginx, with nginx set up to proxy API calls the same way the Vite dev server does. Added it to docker-compose as its own service. One thing worth being upfront about: Docker isn't installed on this machine. I checked pretty thoroughly (PATH, the usual install locations, WSL) and it's just not there. So these configs are written and the YAML is valid, but nobody has actually run a build with them yet. That still needs to happen on a machine that has Docker.
+
+**Kubernetes manifests.** Added a deployment for the frontend and updated the API deployment to mount a persistent volume for the sqlite stores. While doing that I caught a real problem: the API deployment was set to run 2 replicas, but with a single shared volume and sqlite as the backing store, that setup would break the moment two pods tried to write at once. Dropped it to 1 replica and left a comment explaining why, so whoever picks this up next knows it needs a real database before it can scale. Same as Docker, there's no cluster available here to actually deploy and test against, so this is prepared but unverified.
+
+## What's still open
+
+- Somebody with Docker needs to actually build and run the containers, especially the frontend one, to confirm everything talks to each other correctly.
+- Same thing for Kubernetes, once there's a cluster to deploy to.
+- The sqlite-backed stores (audit log, feedback, drift features) work fine for now but will need to move to a real database before the API can run more than one replica.
+- MLflow and drift monitoring are both live and logging, but they're only as useful as the model behind them. Once Nick has real trained weights, registering an updated model version and letting the drift monitor track it in production is basically the next natural step.
 
 ## Commit history
 
-| Commit | Summary |
-|---|---|
-| `4aac708` | Initial commit: README, team info, IDEA.md |
-| `62545d2` | DICOM ingestion and preprocessing pipeline |
-| `7306f15` | MLflow tracking, FastAPI serving, drift monitoring, Docker/K8s, CI |
-| `eb6a08a` | API auth, audit logging, feedback capture |
-
-Repo: https://github.com/JacksonBopp/radiology-second-opinion-agent
+- `4aac708`: Initial commit, README and team info
+- `62545d2`: DICOM ingestion and preprocessing pipeline
+- `7306f15`: MLflow tracking, FastAPI serving, drift monitoring module, Docker/K8s, CI
+- `eb6a08a`: API auth, audit logging, feedback capture
+- `88a98bf`: Fixed the test_agents.py status mismatch that was breaking CI
+- `2fd3611`: Gitignored the local ChromaDB folder
+- `177f95f`: MLflow model registry and live drift monitoring
+- `5aa2f1a`: Frontend added to Docker and Kubernetes configs

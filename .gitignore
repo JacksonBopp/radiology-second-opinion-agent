@@ -15,9 +15,10 @@ mlruns.db
 mlruns/
 mlartifacts/
 
-# Local SQLite stores (audit trail, radiologist feedback)
+# Local SQLite stores (audit trail, radiologist feedback, drift monitoring)
 audit_log.db
 feedback.db
+scan_features.db
 commands.txt
 
 # Frontend

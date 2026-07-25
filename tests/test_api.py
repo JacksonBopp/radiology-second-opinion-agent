@@ -52,3 +52,26 @@ def test_upload_scan_rejects_invalid_dicom(auth_headers):
         headers=auth_headers,
     )
     assert resp.status_code == 422
+
+
+def test_drift_endpoint_reports_insufficient_data_before_enough_scans(auth_headers):
+    resp = client.get("/monitoring/drift", headers=auth_headers)
+
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "insufficient_data"
+
+
+def test_uploading_scans_feeds_the_drift_endpoint(ct_dicom_path, auth_headers):
+    for _ in range(10):
+        with open(ct_dicom_path, "rb") as f:
+            client.post(
+                "/scans",
+                files={"file": ("CT_small.dcm", f, "application/dicom")},
+                headers=auth_headers,
+            )
+
+    resp = client.get("/monitoring/drift", headers=auth_headers)
+
+    assert resp.status_code == 200
+    assert resp.json()["status"] == "ok"
+    assert "metrics" in resp.json()["drift"]

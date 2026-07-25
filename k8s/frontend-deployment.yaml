@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radiology-frontend
+  labels:
+    app: radiology-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: radiology-frontend
+  template:
+    metadata:
+      labels:
+        app: radiology-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: radiology-second-opinion-agent-frontend:latest
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 20
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radiology-frontend
+spec:
+  selector:
+    app: radiology-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

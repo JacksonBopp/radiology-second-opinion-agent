@@ -9,3 +9,9 @@ mlruns.db
 mlruns
 mlartifacts
 tests
+frontend/node_modules
+frontend/dist
+audit_log.db
+feedback.db
+scan_features.db
+data/chromadb

@@ -19,6 +19,7 @@ def isolated_sqlite_stores(tmp_path, monkeypatch):
     """
     monkeypatch.setenv("AUDIT_DB_PATH", str(tmp_path / "audit_log.db"))
     monkeypatch.setenv("FEEDBACK_DB_PATH", str(tmp_path / "feedback.db"))
+    monkeypatch.setenv("SCAN_FEATURES_DB_PATH", str(tmp_path / "scan_features.db"))
 
 
 @pytest.fixture
