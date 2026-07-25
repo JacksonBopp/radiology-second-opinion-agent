@@ -63,12 +63,14 @@ Lightweight/deterministic implementations that run in CI without model weights. 
 
 Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` is set. 18 tests.
 
-### ✅ Amrit — Agent Layer + Frontend Complete (3 commits)
+### ✅ Amrit — Agent Layer, Frontend & Polish Complete (12 commits)
 | Commit | Summary |
 |---|---|
-| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phase 4 & 5) |
-| `28843ff` | Update project process breakdown |
-| `f5b3adf` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
+| `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phases 4 & 5) |
+| `1b13c01` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
+| `b2aca0f` | Fix E2E integration tests: docker compose API keys, axios upload header |
+| `ffe565b` | feat(frontend): polish UI and update comprehensive documentation (Tasks 7.9 & 7.10) |
+| `ed7715a` | docs: finalize project breakdown tracker |
 
 ---
 
