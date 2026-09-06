@@ -1,4 +1,4 @@
-"""LangGraph Orchestrator — the central state machine for analysis.
+"""LangGraph Orchestrator: the central state machine for analysis.
 
 Defines the directed graph that chains the three sub-agents:
 

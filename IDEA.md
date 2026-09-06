@@ -1,4 +1,4 @@
-## 🩻 Radiology Second-Opinion Agent — Deep Dive
+## 🩻 Radiology Second-Opinion Agent: Deep Dive
 
 ---
 
@@ -11,7 +11,7 @@ A production-grade system that:
 4. **Orchestrates** an agentic reasoning loop that cross-references findings
 5. **Generates** a structured, radiologist-grade report with confidence intervals and differential diagnoses
 
-This is not a classifier. It's a full reasoning pipeline that mimics how a senior radiologist actually thinks — pattern recognition → case comparison → literature grounding → structured conclusion.
+This is not a classifier. It's a full reasoning pipeline that mimics how a senior radiologist actually thinks: pattern recognition → case comparison → literature grounding → structured conclusion.
 
 ---
 
@@ -62,7 +62,7 @@ This is not a classifier. It's a full reasoning pipeline that mimics how a senio
 ### 1. Ingestion & Preprocessing
 - Parse DICOM files (industry standard medical image format)
 - Normalize pixel intensities, handle different scan modalities separately
-- Extract metadata — patient age, sex, clinical history, prior scans
+- Extract metadata: patient age, sex, clinical history, prior scans
 - Window/level adjustment per modality (lung window, bone window etc.)
 
 **Tools:** `pydicom`, `SimpleITK`, `OpenCV`, `albumentations`
@@ -78,7 +78,7 @@ This is not a classifier. It's a full reasoning pipeline that mimics how a senio
 
 **Localization Model**
 - U-Net or nnU-Net for pixel-level segmentation of anomalous regions
-- GradCAM/SHAP overlays for explainability — showing *where* the model is looking
+- GradCAM/SHAP overlays for explainability, showing *where* the model is looking
 - Bounding box detection via DETR or YOLOv8 fine-tuned on RSNA datasets
 
 **Severity Scoring**
@@ -96,7 +96,7 @@ This is where it gets architecturally interesting. Three specialized sub-agents:
 **Case Retrieval Agent**
 - Embeds current scan findings into a vector space
 - Retrieves top-K most similar historical cases from a vector store
-- Ranks by similarity + outcome — finding cases where same findings led to confirmed diagnoses
+- Ranks by similarity + outcome, finding cases where same findings led to confirmed diagnoses
 - Tools: `FAISS` or `Weaviate`, `sentence-transformers`
 
 **Literature Search Agent**
@@ -114,7 +114,7 @@ This is where it gets architecturally interesting. Three specialized sub-agents:
 **Orchestrator Agent**
 - Manages the workflow between sub-agents
 - Decides when to request additional retrieval, when confidence is sufficient
-- Handles edge cases — poor image quality, conflicting signals, rare presentations
+- Handles edge cases: poor image quality, conflicting signals, rare presentations
 - Tools: `LangGraph` or `CrewAI`
 
 ---
@@ -125,7 +125,7 @@ Produces a structured report in standard radiological format:
 
 ```
 FINDINGS:
-- Right lower lobe opacity (87% confidence) — 2.3cm region, 
+- Right lower lobe opacity (87% confidence), 2.3cm region, 
   consistent with consolidation. Similar to 12 retrieved cases,
   11 of which confirmed as pneumonia.
 
@@ -165,7 +165,7 @@ SIMILAR CASES: 12 analogous cases from database
 
 ---
 
-### Person 1 — ML Vision Engineer
+### Person 1: ML Vision Engineer
 **Owns:** The entire computer vision pipeline
 
 Responsibilities:
@@ -181,7 +181,7 @@ CV headline: *"Built multi-label chest pathology detection system achieving 0.89
 
 ---
 
-### Person 2 — Agentic Systems Engineer
+### Person 2: Agentic Systems Engineer
 **Owns:** The orchestration and reasoning layer
 
 Responsibilities:
@@ -197,7 +197,7 @@ CV headline: *"Designed multi-agent medical reasoning system with RAG-grounded d
 
 ---
 
-### Person 3 — Data & MLOps Engineer
+### Person 3: Data & MLOps Engineer
 **Owns:** Data pipeline, model serving, and infrastructure
 
 Responsibilities:
@@ -214,7 +214,7 @@ CV headline: *"Built end-to-end MLOps pipeline for medical imaging system handli
 
 ---
 
-### Person 4 — GenAI & NLP Engineer
+### Person 4: GenAI & NLP Engineer
 **Owns:** Report generation and clinical language layer
 
 Responsibilities:
@@ -231,7 +231,7 @@ CV headline: *"Built calibrated radiologist-grade report generation system with 
 
 ---
 
-### Person 5 — Full Stack & Integration Engineer
+### Person 5: Full Stack & Integration Engineer
 **Owns:** UI, API integration, and end-to-end system glue
 
 Responsibilities:
@@ -293,21 +293,21 @@ CV headline: *"Built DICOM viewer with integrated ML anomaly overlay and radiolo
 | Research labs | Novel combination of CV + agents + clinical NLP | ⭐⭐⭐⭐⭐ |
 | Consulting (McKinsey, Deloitte AI) | Real-world impact, production-grade | ⭐⭐⭐⭐ |
 | Medical device companies | Regulatory awareness, clinical pipeline | ⭐⭐⭐⭐⭐ |
-| General software companies | Overqualified signal — any ML role | ⭐⭐⭐⭐ |
+| General software companies | Overqualified signal: any ML role | ⭐⭐⭐⭐ |
 
 ---
 
 ### What Makes This CV Gold
 
-**Technical breadth without shallowness** — you touch computer vision, signal uncertainty, RAG, multi-agent orchestration, MLOps, and clinical NLP. Each is a legitimate deep skill, not a buzzword.
+**Technical breadth without shallowness**: you touch computer vision, signal uncertainty, RAG, multi-agent orchestration, MLOps, and clinical NLP. Each is a legitimate deep skill, not a buzzword.
 
-**Defensible benchmarks** — CheXpert and NIH ChestX-ray14 have published leaderboards. You can directly compare your model's AUC against published baselines. Recruiters and interviewers can verify this isn't invented.
+**Defensible benchmarks**: CheXpert and NIH ChestX-ray14 have published leaderboards. You can directly compare your model's AUC against published baselines. Recruiters and interviewers can verify this isn't invented.
 
-**Production credibility** — DICOM handling, async processing, model serving, drift monitoring. This signals you've thought beyond Jupyter notebooks.
+**Production credibility**: DICOM handling, async processing, model serving, drift monitoring. This signals you've thought beyond Jupyter notebooks.
 
-**Real-world stakes** — medical AI immediately communicates that you understand reliability, uncertainty, and consequences of errors. This is a maturity signal.
+**Real-world stakes**: medical AI immediately communicates that you understand reliability, uncertainty, and consequences of errors. This is a maturity signal.
 
-**Agentic architecture** — multi-agent systems are the current frontier. Having designed a production one is rare at junior/mid level.
+**Agentic architecture**: multi-agent systems are the current frontier. Having designed a production one is rare at junior/mid level.
 
 ---
 
@@ -347,4 +347,4 @@ Agentic Medical Imaging System | Team of 5
 
 ---
 
-Want me to go even deeper on any specific component — the ML pipeline, the agent architecture, the report generation, or the deployment setup?
+Want me to go even deeper on any specific component: the ML pipeline, the agent architecture, the report generation, or the deployment setup?

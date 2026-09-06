@@ -7,7 +7,7 @@ from evidently.presets import DataDriftPreset
 
 from .store import load_feature_history
 
-# Identifier/bookkeeping columns that aren't monitored features —
+# Identifier/bookkeeping columns that aren't monitored features:
 # "id" is monotonically increasing so it would always look drifted,
 # and timestamp/scan_id aren't distributional signals.
 _NON_FEATURE_COLUMNS = {"id", "timestamp", "scan_id"}
@@ -46,7 +46,7 @@ def compute_current_drift(min_samples: int = 10, reference_fraction: float = 0.5
     batch.
 
     Raises ValueError if fewer than min_samples scans have been
-    logged yet — there isn't enough history to compare against.
+    logged yet; there isn't enough history to compare against.
     """
     history = load_feature_history()
     if len(history) < min_samples:

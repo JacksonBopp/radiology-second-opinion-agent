@@ -1,23 +1,23 @@
 """Report quality evaluation.
 
 Fulfills Task 6.9 (evaluate report quality against real radiologist
-reports) and Task 7.8 (final report quality evaluation — clinical
+reports) and Task 7.8 (final report quality evaluation: clinical
 accuracy, completeness).
 
 Three lightweight, dependency-free metrics are computed (no extra NLP
 packages required, keeping the pipeline runnable in CI/mock mode):
 
-1. Completeness — are the expected sections present and non-empty.
-2. Groundedness — does every diagnosis/finding named in the report
+1. Completeness: are the expected sections present and non-empty.
+2. Groundedness: does every diagnosis/finding named in the report
    prose actually appear in the source agent state (a cheap proxy for
    catching hallucinated content, especially important once the LLM
    path in `generator.py` is live).
-3. Lexical overlap against a reference report — a rough proxy for
+3. Lexical overlap against a reference report, a rough proxy for
    content agreement when a real radiologist report is available for
    the same case, used to sanity-check the generation pipeline during
    development (Task 6.9) and in the final evaluation pass (Task 7.8).
 
-This intentionally does NOT attempt to score clinical correctness —
+This intentionally does NOT attempt to score clinical correctness;
 that requires a licensed radiologist and is out of scope for an
 automated metric. It flags things a human reviewer should look at.
 """
@@ -124,7 +124,7 @@ def evaluate_groundedness(report: RadiologyReport) -> tuple[float, list[str]]:
         else:
             flags.append(
                 f"CRITICAL: '{section.heading}' section does not reference "
-                f"any known differential diagnosis — possible hallucination"
+                f"any known differential diagnosis: possible hallucination"
             )
 
     score = grounded_hits / len(checked_sections)

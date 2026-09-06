@@ -5,7 +5,7 @@ is stored as a document with its clinical description and findings,
 enabling semantic similarity search against current scan findings.
 
 The default embedding function (all-MiniLM-L6-v2 via sentence-transformers)
-runs locally — no external API calls needed.
+runs locally: no external API calls needed.
 """
 
 from __future__ import annotations
@@ -21,7 +21,7 @@ from src.agent.state import SimilarCase
 
 logger = logging.getLogger(__name__)
 
-# Default persistence path — survives restarts so we don't re-seed every time.
+# Default persistence path, survives restarts so we don't re-seed every time.
 _DEFAULT_PERSIST_DIR = Path(__file__).resolve().parent.parent.parent / "data" / "chromadb"
 
 COLLECTION_NAME = "radiology_cases"
@@ -72,7 +72,7 @@ class CaseVectorStore:
         ids = []
 
         for case in new_cases:
-            # Build a rich text document for embedding — combine description
+            # Build a rich text document for embedding, combine description
             # + findings so the embedding captures clinical meaning.
             findings_text = ", ".join(case.get("findings", []))
             doc = f"{case['description']} Findings: {findings_text}"
@@ -113,7 +113,7 @@ class CaseVectorStore:
             List of ``SimilarCase`` objects sorted by descending similarity.
         """
         if self._collection.count() == 0:
-            logger.warning("Vector store is empty — no results to return.")
+            logger.warning("Vector store is empty. No results to return.")
             return []
 
         # Clamp top_k to available count
@@ -146,7 +146,7 @@ class CaseVectorStore:
                 )
             )
 
-        # Sort by similarity (highest first) — ChromaDB returns by distance
+        # Sort by similarity (highest first); ChromaDB returns by distance
         # (lowest first) so the order should already be correct, but
         # we explicitly sort to be safe.
         similar_cases.sort(key=lambda c: c.similarity_score, reverse=True)

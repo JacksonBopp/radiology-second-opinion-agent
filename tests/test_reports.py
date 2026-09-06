@@ -9,7 +9,7 @@ from src.reports.schemas import ConfidenceLevel, RadiologyReport
 
 
 # ---------------------------------------------------------------------------
-# Fixtures — a representative completed AgentState
+# Fixtures: a representative completed AgentState
 # ---------------------------------------------------------------------------
 
 
@@ -175,7 +175,7 @@ def test_build_report_prompt_handles_empty_inputs():
 
 
 # ---------------------------------------------------------------------------
-# Generator (mock mode — no ANTHROPIC_API_KEY set in test env)
+# Generator (mock mode: no ANTHROPIC_API_KEY set in test env)
 # ---------------------------------------------------------------------------
 
 
@@ -245,7 +245,7 @@ def test_evaluate_report_quality_flags_missing_sections(sample_state):
 def test_evaluate_report_quality_flags_hallucinated_diagnosis(sample_state):
     report = generate_report(sample_state)
     # Corrupt the impression section so it no longer references any
-    # known differential diagnosis — simulates an LLM hallucination.
+    # known differential diagnosis: simulates an LLM hallucination.
     for section in report.sections:
         if section.heading == "Impression":
             section.body = "Findings are most consistent with a rare tropical parasite."

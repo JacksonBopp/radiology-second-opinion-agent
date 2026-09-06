@@ -97,7 +97,7 @@ class DifferentialDiagnosis(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# LangGraph AgentState — the data that flows through the graph
+# LangGraph AgentState: the data that flows through the graph
 # ---------------------------------------------------------------------------
 
 

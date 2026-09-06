@@ -1,4 +1,4 @@
-"""Differential Diagnosis Agent — generates ranked diagnostic hypotheses.
+"""Differential Diagnosis Agent: generates ranked diagnostic hypotheses.
 
 LangGraph node that synthesizes ML findings, similar historical cases,
 and literature evidence to produce a ranked list of differential diagnoses
@@ -123,7 +123,7 @@ def _update_probabilities_with_evidence(
     """Apply Bayesian-style evidence updating to base probabilities.
 
     This is a simplified mock of what Claude 3 Haiku would do in
-    production — it adjusts probabilities based on how many similar
+    production; it adjusts probabilities based on how many similar
     cases confirm each diagnosis and how strongly literature supports it.
     """
     results: list[DifferentialDiagnosis] = []

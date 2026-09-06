@@ -11,7 +11,7 @@ Why this exists as its own step (rather than reporting raw floats):
   well-hedged language, not a bare percentage that implies false
   precision.
 - Raw model confidence is not the same as calibrated probability of
-  correctness — vision models in particular are frequently
+  correctness; vision models in particular are frequently
   overconfident. Once Nick's models are trained, `temperature` below
   is the hook for applying a fitted calibration curve (e.g. Platt
   scaling / temperature scaling) before bucketing; today it defaults

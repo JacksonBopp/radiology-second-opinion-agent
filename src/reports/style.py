@@ -7,7 +7,7 @@ Fulfills Task 5.10. Two responsibilities live here:
    "mock data first" pattern used throughout `src.agent`). This keeps
    the pipeline fully runnable and testable without API costs.
 2. `enforce_radiology_register()`: a light-touch cleanup pass applied
-   to *any* section text — mock-generated or real-LLM-generated —
+   to *any* section text, mock-generated or real-LLM-generated,
    so output is consistently declarative, hedged, and free of
    first-person/conversational language before it reaches a report.
 

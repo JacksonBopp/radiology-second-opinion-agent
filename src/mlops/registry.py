@@ -16,7 +16,7 @@ class VisionModelWrapper(mlflow.pyfunc.PythonModel):
     """Adapts VisionModelBaseline to the mlflow.pyfunc.PythonModel
     interface so it can be logged/registered/loaded through MLflow
     like any other model. Swapping in Nick's trained weights later
-    means only this wrapper (or the model it constructs) changes —
+    means only this wrapper (or the model it constructs) changes;
     everything downstream that loads via `models:/<name>/<stage>`
     keeps working.
     """

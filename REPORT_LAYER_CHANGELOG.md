@@ -7,7 +7,7 @@ Engineer): structured report generation, the clinical language layer,
 confidence calibration, and report quality evaluation, built on top of
 Amrit's already-completed `src/agent` LangGraph pipeline.
 
-### 1. Structured Report Schemas — `src/reports/schemas.py` (Task 4.7)
+### 1. Structured Report Schemas: `src/reports/schemas.py` (Task 4.7)
 - `RadiologyReport`, `ReportSection`, `FindingSummary`, `DifferentialEntry`,
   `GuidelineReference`, and a 5-level `ConfidenceLevel` enum.
 - Kept intentionally separate from `src.agent.state.AgentState`: the
@@ -15,7 +15,7 @@ Amrit's already-completed `src/agent` LangGraph pipeline.
   models are the external report contract consumed by the frontend
   report viewer and evaluation tooling.
 
-### 2. Prompt Engineering — `src/reports/prompts.py` (Task 4.8)
+### 2. Prompt Engineering: `src/reports/prompts.py` (Task 4.8)
 - `SYSTEM_PROMPT` + `build_report_prompt()` for Claude 3 Haiku (the model
   already selected for the Retrieval/Diagnosis agents per the approved
   implementation plan).
@@ -23,17 +23,17 @@ Amrit's already-completed `src/agent` LangGraph pipeline.
   preserve the Diagnosis Agent's ranking instead of re-ranking, always
   hedge language, respond with schema-conformant JSON only.
 
-### 3. Confidence Calibration — `src/reports/calibration.py` (Task 5.7)
+### 3. Confidence Calibration: `src/reports/calibration.py` (Task 5.7)
 - Maps raw/Bayesian-updated probabilities to 5 calibrated confidence
   buckets and clinician-facing phrases (e.g. "moderate confidence
   (approximately 55%)").
 - Includes a `temperature` hook (logit-space temperature scaling) ready
   to receive a fitted calibration curve once Nick's models produce a
-  real calibration set (Tasks 3.6 / 7.5) — currently a no-op (1.0).
+  real calibration set (Tasks 3.6 / 7.5), currently a no-op (1.0).
 - `summarize_uncertainty()` produces the report's overall confidence
   level and caveat text, discounting single-diagnosis differentials.
 
-### 4. Radiology Report Style Adapter — `src/reports/style.py` (Task 5.10)
+### 4. Radiology Report Style Adapter: `src/reports/style.py` (Task 5.10)
 - Deterministic mock-mode section templates (Findings / Impression /
   Recommendation) consistent with the "mock data first" pattern used in
   `src.agent.diagnosis` and `src.agent.literature`.
@@ -41,7 +41,7 @@ Amrit's already-completed `src/agent` LangGraph pipeline.
   phrasing ("I think", "definitely", "100% certain") from any section
   text, mock- or LLM-generated, so both paths converge on one house style.
 
-### 5. Report Generation Pipeline — `src/reports/generator.py` (Tasks 5.8, 5.9, 6.10)
+### 5. Report Generation Pipeline: `src/reports/generator.py` (Tasks 5.8, 5.9, 6.10)
 - `generate_report(state)`: builds a full `RadiologyReport` from a
   completed (or partial) `AgentState`.
 - **Mock mode** (default, no API key): fully deterministic, runs in CI.
@@ -54,24 +54,24 @@ Amrit's already-completed `src/agent` LangGraph pipeline.
 - Surfaces `clinical_guidelines` from the Literature Agent as
   `GuidelineReference` entries with per-reference relevance text.
 
-### 6. Report Quality Evaluation — `src/reports/evaluation.py` (Tasks 6.9, 7.8)
+### 6. Report Quality Evaluation: `src/reports/evaluation.py` (Tasks 6.9, 7.8)
 - `evaluate_report_quality()` computes: completeness (expected sections
-  present/non-trivial), groundedness (a cheap hallucination check — do
+  present/non-trivial), groundedness (a cheap hallucination check: do
   Impression/Recommendation sections actually reference a known
   differential diagnosis), and optional lexical overlap against a real
   radiologist report when one is available for the same case.
-- Deliberately does not attempt to score clinical correctness — that
+- Deliberately does not attempt to score clinical correctness; that
   requires a licensed radiologist. `passes_minimum_bar` is a CI/dashboard
   gate, not a clinical sign-off.
 
-### 7. API Integration — `src/api/routes/reports.py`
+### 7. API Integration: `src/api/routes/reports.py`
 - New `POST /reports` endpoint: runs the LangGraph analysis graph and
   the report generator in one call, returning the full `RadiologyReport`.
   Reuses the existing `AnalysisRequest` schema and auth dependency from
   `/analyze` so the frontend can call either endpoint interchangeably.
 - Registered in `src/api/main.py`.
 
-### 8. Testing — `tests/test_reports.py`
+### 8. Testing: `tests/test_reports.py`
 - 18 tests covering calibration bucketing/temperature scaling, style
   register enforcement, prompt construction (including empty-input
   edge cases), mock-mode report generation end-to-end, and evaluation

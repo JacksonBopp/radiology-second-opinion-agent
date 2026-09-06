@@ -87,5 +87,5 @@ npm run build
 
 ## Documentation
 
-- [IDEA.md](IDEA.md) — full system architecture, component breakdown, tech stack, team role details, and project timeline.
-- [project_process_breakdown.md](project_process_breakdown.md) — development timeline and task assignments.
+- [IDEA.md](IDEA.md): full system architecture, component breakdown, tech stack, team role details, and project timeline.
+- [project_process_breakdown.md](project_process_breakdown.md): development timeline and task assignments.

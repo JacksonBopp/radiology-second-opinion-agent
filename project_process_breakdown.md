@@ -1,4 +1,4 @@
-# Radiology Second-Opinion Agent — Full Project Process
+# Radiology Second-Opinion Agent: Full Project Process
 
 > **Team:** The Nguyeners | **Course:** CAI4002 Final Project  
 > **Repo:** [radiology-second-opinion-agent](https://github.com/JacksonBopp/radiology-second-opinion-agent)
@@ -24,8 +24,8 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 |---|---|---|
 | **Vector Database** | ChromaDB | Local, free, developer-friendly, integrates well with LangChain/LlamaIndex |
 | **Agent Framework** | LangGraph | Explicit stateful routing, deterministic, prevents runaway token usage |
-| **LLM — Literature Agent** | Gemini 1.5 Flash | Massive context window for reading full medical papers cheaply (~$0.075/1M tokens) |
-| **LLM — Retrieval & Diagnosis Agents** | Claude 3 Haiku | Strong reasoning + strict JSON structuring (~$0.25/1M input tokens) |
+| **LLM: Literature Agent** | Gemini 1.5 Flash | Massive context window for reading full medical papers cheaply (~$0.075/1M tokens) |
+| **LLM: Retrieval & Diagnosis Agents** | Claude 3 Haiku | Strong reasoning + strict JSON structuring (~$0.25/1M input tokens) |
 | **Frontend** | React (Vite) + Cornerstone.js | Separate `frontend/` directory, modern UX, best DICOM viewer integration |
 | **Initial Data Strategy** | Mock dummy data | For development/UI testing first, transition to real APIs later |
 | **Estimated Cost** | ~$0.006 per analysis | ~160 analyses per $1.00 |
@@ -34,7 +34,7 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 
 ## Current Status (as of July 25, 2026)
 
-### ✅ Jackson Bopp — Complete (11 commits)
+### ✅ Jackson Bopp: Complete (11 commits)
 | Commit | Summary |
 |---|---|
 | `4aac708` | Project setup: README, IDEA.md, team info |
@@ -51,7 +51,7 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 
 **62 tests passing**, CI green on GitHub Actions.
 
-### ✅ Nicholas Toptchi — Vision Layer Complete (2 commits)
+### ✅ Nicholas Toptchi: Vision Layer Complete (2 commits)
 | Commit | Summary |
 |---|---|
 | `a82b978` | Vision pipeline: models, datasets, localization, explainability, evaluation, pipeline |
@@ -59,18 +59,18 @@ These were locked in during the "Reviewing Implementation Plan Options" conversa
 
 Lightweight/deterministic implementations that run in CI without model weights. Covers tasks 1.5, 2.5–2.7, 3.6–3.9, 7.7.
 
-### ✅ Bryan Nguyen — Report Layer Complete (1 commit)
+### ✅ Bryan Nguyen: Report Layer Complete (1 commit)
 | Commit | Summary |
 |---|---|
 | `cd6a1fb` | Add GenAI report generation layer: schemas, prompts, calibration, style, generator, evaluation (4.7, 4.8, 5.7, 5.8, 5.9, 5.10, 6.9, 7.8) |
 
 Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` is set. 18 tests.
 
-### ✅ Amrit Ganesh — Agent Layer, Frontend & Polish Complete (13 commits)
+### ✅ Amrit Ganesh: Agent Layer, Frontend & Polish Complete (13 commits)
 | Commit | Summary |
 |---|---|
 | `1eb1ebb` | Complete agentic reasoning layer with API integration and tests (Phases 4 & 5) |
-| `1b13c01` | Phase 6: Frontend dashboard — React + Vite (Tasks 6.1–6.8) |
+| `1b13c01` | Phase 6: Frontend dashboard (React + Vite, Tasks 6.1–6.8) |
 | `b2aca0f` | Fix E2E integration tests: docker compose API keys, axios upload header |
 | `ffe565b` | feat(frontend): polish UI and update comprehensive documentation (Tasks 7.9 & 7.10) |
 | `ed7715a` | docs: finalize project breakdown tracker |
@@ -78,7 +78,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 
 ---
 
-## Chronological Process — Start to Finish
+## Chronological Process: Start to Finish
 
 ### Phase 1: Project Foundation & Data Infrastructure *(Weeks 1–2)*
 
@@ -124,7 +124,7 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 
 ---
 
-### Phase 4: Agentic Reasoning Layer — Case Retrieval & Literature Search *(Weeks 7–8)*
+### Phase 4: Agentic Reasoning Layer: Case Retrieval & Literature Search *(Weeks 7–8)*
 
 | # | Task | Owner | Status |
 |---|---|---|---|
@@ -145,9 +145,9 @@ Mock mode runs in CI; LLM mode activates automatically when `ANTHROPIC_API_KEY` 
 |---|---|---|---|
 | 5.1 | Build Differential Diagnosis Agent (`src/agent/diagnosis.py`) using Claude 3 Haiku with structured chain-of-thought | **Amrit** | ✅ Done |
 | 5.2 | Implement prior probability assignment + Bayesian evidence updating | **Amrit** | ✅ Done |
-| 5.3 | Build Orchestrator Agent (`src/agent/orchestrator.py`) — LangGraph state machine | **Amrit** | ✅ Done |
+| 5.3 | Build Orchestrator Agent (`src/agent/orchestrator.py`): LangGraph state machine | **Amrit** | ✅ Done |
 | 5.4 | Handle agent failure modes, retries, fallbacks | **Amrit** | ✅ Done |
-| 5.5 | Build analysis API endpoint (`src/api/routes/analysis.py`) — trigger LangGraph workflow | **Amrit** | ✅ Done |
+| 5.5 | Build analysis API endpoint (`src/api/routes/analysis.py`): trigger LangGraph workflow | **Amrit** | ✅ Done |
 | 5.6 | Modify `src/api/main.py` to register agent routes | **Amrit** | ✅ Done |
 | 5.7 | Implement confidence calibration and uncertainty communication | **Bryan** | ✅ Done |
 | 5.8 | Build report generation pipeline (LLM API + structured prompting) | **Bryan** | ✅ Done |

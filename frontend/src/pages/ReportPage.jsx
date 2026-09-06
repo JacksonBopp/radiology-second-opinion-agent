@@ -104,14 +104,14 @@ const MOCK_REPORT = {
         'Diagnostic criteria and management recommendations for CAP',
     },
     {
-      text: 'Fleischner Society 2017 — Incidental Pulmonary Nodules',
+      text: 'Fleischner Society 2017: Incidental Pulmonary Nodules',
       relevance: 'Follow-up imaging recommendations',
     },
   ],
   similar_case_ids: ['CASE-2024-0847', 'CASE-2024-1203'],
   overall_confidence_level: 'high',
   uncertainty_note:
-    'This AI-generated second opinion is intended to supplement — not replace — radiologist interpretation. Clinical correlation is essential.',
+    'This AI-generated second opinion is intended to supplement, not replace, radiologist interpretation. Clinical correlation is essential.',
   model_version: 'mock-v0',
 };
 
@@ -299,7 +299,7 @@ export default function ReportPage() {
                   <li key={i}>
                     <strong>{ref.text}</strong>
                     {ref.relevance && (
-                      <span className="text-muted"> — {ref.relevance}</span>
+                      <span className="text-muted">: {ref.relevance}</span>
                     )}
                   </li>
                 ))}

@@ -27,7 +27,7 @@ from pydantic import BaseModel, Field
 class ConfidenceLevel(str, Enum):
     """Calibrated, clinician-facing confidence bucket.
 
-    Deliberately coarse (5 buckets) rather than a raw percentage — see
+    Deliberately coarse (5 buckets) rather than a raw percentage; see
     `calibration.py` for the rationale and the mapping from raw model
     probabilities to these levels.
     """
@@ -133,7 +133,7 @@ class RadiologyReport(BaseModel):
 
     def as_plain_text(self) -> str:
         """Render the report as a plain-text document (for PDF/print/eval)."""
-        lines = [f"RADIOLOGY SECOND OPINION — Scan {self.scan_id}", ""]
+        lines = [f"RADIOLOGY SECOND OPINION: Scan {self.scan_id}", ""]
         for section in self.sections:
             lines.append(section.heading.upper())
             lines.append(section.body)

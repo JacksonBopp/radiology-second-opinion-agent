@@ -1,4 +1,4 @@
-"""Report generation pipeline — turns agent output into a RadiologyReport.
+"""Report generation pipeline: turns agent output into a RadiologyReport.
 
 Fulfills Tasks 5.8 (report generation pipeline), 5.9 (differential
 diagnosis ranking in reports), and 6.10 (clinical guideline references
@@ -248,7 +248,7 @@ def generate_report(state: dict[str, Any]) -> RadiologyReport:
 
     Returns:
         A fully populated `RadiologyReport`. Never raises for missing/
-        empty state fields — mirrors the defensive style used in
+        empty state fields; mirrors the defensive style used in
         `src.agent.diagnosis.run_diagnosis`.
     """
     scan_id = state.get("scan_id", "unknown")

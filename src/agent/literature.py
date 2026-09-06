@@ -1,4 +1,4 @@
-"""Literature Search Agent — retrieves PubMed papers and clinical guidelines.
+"""Literature Search Agent: retrieves PubMed papers and clinical guidelines.
 
 LangGraph node that searches medical literature relevant to the current
 findings, extracts clinical guidelines, and returns structured results.
@@ -50,7 +50,7 @@ _CLINICAL_GUIDELINES: dict[str, list[str]] = {
     ],
     "ground-glass opacity": [
         "Fleischner Society Position Paper: Management of Subsolid Pulmonary Nodules (2017)",
-        "ACR Appropriateness Criteria: Chronic Dyspnea — Suspected Pulmonary Origin (2022)",
+        "ACR Appropriateness Criteria: Chronic Dyspnea, Suspected Pulmonary Origin (2022)",
     ],
     "hilar lymphadenopathy": [
         "ATS/ERS/WASOG Statement on Sarcoidosis (2020 Update)",

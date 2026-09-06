@@ -1,4 +1,4 @@
-"""Case Retrieval Agent — finds similar historical cases via ChromaDB.
+"""Case Retrieval Agent: finds similar historical cases via ChromaDB.
 
 LangGraph node that queries the vector store for cases with findings
 similar to the current scan, then ranks them by outcome relevance.
@@ -17,7 +17,7 @@ from src.agent.vector_store import CaseVectorStore
 
 logger = logging.getLogger(__name__)
 
-# Module-level store instance — lazily initialized on first call.
+# Module-level store instance, lazily initialized on first call.
 _store: CaseVectorStore | None = None
 
 

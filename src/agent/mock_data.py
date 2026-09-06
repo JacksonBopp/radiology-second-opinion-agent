@@ -5,9 +5,9 @@ vector store and serve as mock ML vision pipeline output. Each case
 represents a plausible clinical scenario with findings, demographics,
 confirmed diagnosis, and outcome.
 
-These cases are intentionally diverse — covering pneumonia, lung nodules,
+These cases are intentionally diverse, covering pneumonia, lung nodules,
 pleural effusion, pneumothorax, cardiomegaly, rib fractures, and normal
-studies — so the retrieval and diagnosis agents get meaningful variety.
+studies, so the retrieval and diagnosis agents get meaningful variety.
 """
 
 from __future__ import annotations

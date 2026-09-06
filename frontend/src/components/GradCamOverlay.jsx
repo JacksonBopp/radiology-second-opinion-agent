@@ -7,7 +7,7 @@
  */
 
 /**
- * Generate a mock GradCAM heatmap — a synthetic Gaussian blob.
+ * Generate a mock GradCAM heatmap: a synthetic Gaussian blob.
  * @param {number} width - Image width
  * @param {number} height - Image height
  * @param {string} location - Anatomical location of finding
@@ -85,7 +85,7 @@ export default function GradCamControls({ showGradcam, onToggle, finding }) {
         </span>
       )}
       {showGradcam && (
-        <span className="text-muted text-sm">Mock visualization — awaiting ML pipeline</span>
+        <span className="text-muted text-sm">Mock visualization: awaiting ML pipeline</span>
       )}
     </div>
   );
