@@ -15,11 +15,11 @@ See [IDEA.md](IDEA.md) for the detailed breakdown of responsibilities, architect
 
 ## Project Description
 
-We are building a Radiology Second-Opinion Agent, an AI-powered system that analyzes medical images like chest X-rays and flags potential abnormalities, then generates a structured diagnostic report similar to what a radiologist would produce.
+A hackathon project: a system that analyzes chest X-rays, flags possible abnormalities, and writes a structured report like the one a radiologist would produce.
 
-The system works in stages: a computer vision model trained to detect conditions like pneumonia, lung nodules, and other common pathologies analyzes the scan. An AI agent then takes those findings and cross-references them against similar historical cases and relevant medical literature. Finally, a large language model synthesizes everything into a readable report, complete with a ranked list of possible diagnoses and a confidence level attached to each one.
+It works in three stages: a computer vision model checks the scan for findings such as pneumonia and lung nodules, an agent compares those findings with similar past cases and medical literature, and an LLM writes a report with ranked possible diagnoses and a confidence level for each.
 
-The goal is not to replace radiologists but to act as a reliable second opinion, particularly in scenarios where access to specialists may be limited.
+It's meant as a second opinion, not a replacement for a radiologist, especially where specialists are hard to reach.
 
 ## Quickstart & Setup
 
